@@ -57,7 +57,6 @@ async function server () {
     const id = req.params.id;
     const query = {_id: ObjectId(id)};
     const result = await studentCollection.deleteOne(query);
-
     res.json(result);
   });
   
@@ -78,8 +77,17 @@ async function server () {
       }
     }
     const result = await studentCollection.updateOne(query, update, options);
-
     res.json(result);
+  });
+
+  // REQUEST FOR SEARCH FIELD DATA
+  app.get("/search", async (req, res) =>{
+    const value = req.query;
+    const stData = await studentCollection.filter((data) =>{
+      data.name.toLowerCase().includes(value.toLowerCase());
+    })
+    console.log(value);
+    // res.send(stData);
   })
   
   } finally{
