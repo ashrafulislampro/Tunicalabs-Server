@@ -33,7 +33,6 @@ async function server () {
     // REQUEST POST A NEW STUDENT DATA
     app.post("/addEvent", async (req, res) => {
         const event = req.body;
-        console.log(event);
         const result = await studentCollection.insertOne(event);
         res.json(result);
     })
@@ -73,22 +72,14 @@ async function server () {
         class: event.class,
         radio: event.radio,
         divison: event.divison,
-        date: event.date
+        age: event.age
       }
     }
     const result = await studentCollection.updateOne(query, update, options);
     res.json(result);
   });
 
-  // REQUEST FOR SEARCH FIELD DATA
-  app.get("/search", async (req, res) =>{
-    const value = req.query;
-    const stData = await studentCollection.filter((data) =>{
-      data.name.toLowerCase().includes(value.toLowerCase());
-    })
-    console.log(value);
-    // res.send(stData);
-  })
+ 
   
   } finally{
     // await client.close();
